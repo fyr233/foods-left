@@ -1,0 +1,63 @@
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+.logo {
+  width: 300px;
+  height: 200px;
+}
+
+.form-login {
+  max-width: 330px;
+  padding: 15px;
+  margin: 100px auto;
+}
+
+.form-login-heading {
+  border-bottom: 2px dashed gray;
+}
+
+.form-login .form-login-heading,
+.form-login .checkbox {
+  margin-top: 10px;	
+  margin-bottom: 10px;
+}
+.form-login .checkbox {
+  font-weight: normal;
+  font-size: 15px;
+}
+.form-login .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-login .form-control:focus {
+  z-index: 2;
+}
+.form-login input{
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.btn-primary {
+  background-color: #e79686;
+  border-color: #e79686;
+}
+.btn-primary:hover {
+  background-color: #ecd6c7;
+  border-color: #ecd6c7;
+}
+
+.form-login input,
+.form-login input:hover,
+.form-login input:focus {
+  background-color: transparent;
+  border: transparent;
+  border-bottom: 2px dashed gray;
+}
