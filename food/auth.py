@@ -42,6 +42,7 @@ def register():
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
+    error = None
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -61,9 +62,8 @@ def login():
             session['user_id'] = user['id']
             return redirect(url_for('index'))
 
-        flash(error)
 
-    return render_template('auth/login.html')
+    return render_template('auth/login.html',  error=error)
 
 
 @bp.before_app_request
