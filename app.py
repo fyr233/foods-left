@@ -87,7 +87,7 @@ def shop():
 @app.route('/shop/<path:path_name>', methods = ['POST'])#商家主页下属页面/操作
 def inshop(path_name):
 
-    if path_name == 'info':#商家主页->商家信息
+    if path_name == 'info':#商家主页->商家信息，如果用户是商家所有者，返回不同的html
         return render_template('shop/info.html')
 
     if path_name == 'foodlist':#商家主页->商家食品列表查询，参数在POSTdata中，店内搜索也使用此接口
@@ -104,6 +104,15 @@ def inshop(path_name):
         if path_name == 'food/report':#商家主页->食品主页->举报食品
             return jsonify({'status':'OK'})
 
+        if path_name == 'food/add':#商家主页->食品主页->新增食品
+            return jsonify({'status':'OK'})
+
+        if path_name == 'food/del':#商家主页->食品主页->删除食品
+            return jsonify({'status':'OK'})
+
+        if path_name == 'food/change':#商家主页->食品主页->修改食品
+            return jsonify({'status':'OK'})
+
     if path_name == 'follow':#商家主页->关注店铺
         return jsonify({'status':'OK'})
 
@@ -114,6 +123,9 @@ def inshop(path_name):
         return jsonify({'status':'OK'})
 
     if path_name == 'comment':#商家主页->评论店铺
+        return jsonify({'status':'OK'})
+
+    if path_name == 'changeinfo':#商家主页->修改商家信息
         return jsonify({'status':'OK'})
 
 @app.route('/placeorder', methods = ['POST'])#下单页面
@@ -128,6 +140,7 @@ def inplaceorder(path_name):
 
     if path_name == 'pay':#付款请求
         return jsonify({'status':'OK'})
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
