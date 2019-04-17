@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>food</title>
+     <!-- Bootstrap core CSS -->
+    <link href="../../static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../static/css/login.css" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../../static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+</head>
+<body>
+  Hello <br/>
+  <nav>
+    <ul>
+      {% if g.user %}
+        <li><span>{{ g.user['username'] }}</span>
+        <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
+      {% else %}
+        <li><a href="{{ url_for('auth.register') }}">Register</a>
+        <li><a href="{{ url_for('auth.login') }}">Log In</a>
+      {% endif %}
+    </ul>
+  </nav>
+  <section class="content">
+  <header>
+    {% block header %}
+      <h1>{% block title %}Posts{% endblock %}</h1>
+      {% if g.user %}
+        <a class="action" href="{{ url_for('blog.create') }}">New</a>
+      {% endif %}
+    {% endblock %}
+  </header>
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+      {% block content %}
+      {% for post in posts %}
+        <article class="post">
+          <header>
+            <div>
+              <h1>{{ post['title'] }}</h1>
+              <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d, %H:%M:%S"') }}</div>
+            </div>
+            {% if g.user['id'] == post['author_id'] %}
+              <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
+            {% endif %}
+          </header>
+          <p class="body">{{ post['body'] }}</p>
+        </article>
+        {% if not loop.last %}
+          <hr>
+        {% endif %}
+      {% endfor %}
+    {% endblock %}
+</section>
+
+    <script type="text/javascript" src="../../static/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../../static/js/bootstrap.min.js"></script>
+
+</body>
+</html>
