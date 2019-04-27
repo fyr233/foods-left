@@ -1,0 +1,85 @@
+{% block content %}
+{% for post in posts %}
+  <article class="post">
+    <header>
+      <div>
+        <h1>{{ post['title'] }}</h1>
+        <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d, %H:%M:%S"') }}</div>
+      </div>
+      {% if g.user['id'] == post['author_id'] %}
+        <a class="action" href="{{ url_for('products.update', id=post['id']) }}">Edit</a>
+      {% endif %}
+    </header>
+    <p class="body">{{ post['body'] }}</p>
+  </article>
+  {% if not loop.last %}
+    <hr>
+  {% endif %}
+{% endfor %}
+
+<div class="owl-wrapper-outer">
+  <div class="owl-wrapper" style="display: block; width: 960px; left: 0px; transition: all 800ms ease 0s; transform: translate3d(-240px, 0px, 0px);">
+    <div class="owl-item" style="width: 120px;">
+      <div class="post-slide">
+        <div class="post-header">
+          <a href="#" class="subtitle" target="_blank">店家名称</a>
+          <h3 class="post-title"><a href="#" target="_blank">商品名称</a></h3>
+        </div>
+        <div class="pic">
+          <img src="../static/images/logo.png" alt="">
+        </div>
+        <ul class="post-bar">
+          <li><i class="fa fa-users"></i> <a href="#">Admin</a></li>
+          <li><i class="fa fa-clock-o"></i> March 5,2018</li>
+          <li><i class="fa fa-comments"></i> <a href="#">2 Comment</a></li>
+        </ul>
+        <p class="post-description">
+          商品介绍。
+        </p>
+        <a href="http://www.jsdaima.com/" class="read-more" target="_blank">订购</a>
+      </div>
+    </div>
+    <div class="owl-item" style="width: 120px;">
+      <div class="post-slide">
+        <div class="post-header">
+          <a href="#" class="subtitle" target="_blank">店家名称</a>
+          <h3 class="post-title"><a href="#" target="_blank">商品名称</a></h3>
+        </div>
+        <div class="pic">
+          <img src="../static/images/logo.png" alt="">
+        </div>
+        <ul class="post-bar">
+          <li><i class="fa fa-users"></i> <a href="#">Admin</a></li>
+          <li><i class="fa fa-clock-o"></i> March 5,2018</li>
+          <li><i class="fa fa-comments"></i> <a href="#">2 Comment</a></li>
+        </ul>
+        <p class="post-description">
+          商品介绍。
+        </p>
+        <a href="http://www.jsdaima.com/" class="read-more" target="_blank">订购</a>
+      </div>
+    </div>
+    <div class="owl-item" style="width: 120px;">
+      <div class="post-slide">
+        <div class="post-header">
+          <a href="#" class="subtitle" target="_blank">店家名称</a>
+          <h3 class="post-title"><a href="#" target="_blank">商品名称</a></h3>
+        </div>
+        <div class="pic">
+          <img src="../static/images/logo.png" alt="">
+        </div>
+        <ul class="post-bar">
+          <li><i class="fa fa-users"></i> <a href="#">Admin</a></li>
+          <li><i class="fa fa-clock-o"></i> March 5,2018</li>
+          <li><i class="fa fa-comments"></i> <a href="#">2 Comment</a></li>
+        </ul>
+        <p class="post-description">
+          商品介绍。
+        </p>
+        <a href="http://www.jsdaima.com/" class="read-more" target="_blank">订购</a>
+      </div>
+    </div>
+    
+  </div>
+</div>
+{% endblock %}

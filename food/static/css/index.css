@@ -1,0 +1,11 @@
+.nav-item {
+	border-left: 1px #6495ED solid;
+	border-right: 1px #6495ED solid;
+	background-color: #F5F5F5;
+	font-size: 20px;
+}
+
+
+.navbar {
+	padding: 0;
+}

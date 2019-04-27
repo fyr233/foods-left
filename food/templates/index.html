@@ -5,23 +5,20 @@
     <title>food</title>
      <!-- Bootstrap core CSS -->
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/css/login.css" rel="stylesheet">
+    <link href="../static/css/index.css" rel="stylesheet">
+    <link href="../static/css/font-awesome.min.css" rel="stylesheet">
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="../static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 </head>
 <body>
   <div class="container">
 
-    <nav class="navbar navbar-expand navbar-light bg-light fixed-top">
-
-      <ul class="navbar-nav">
-          <li class="nav-item"><a href="#" class="nav-link">1</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">2</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">3</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">4</a></li>
-      </ul>
-
-    </nav>
+    <div class="navbar navbar-expand navbar-light bg-light fixed-top row">
+        <div class="nav-item col-3"><a href="#" class="nav-link text-center">商品</a></div>
+        <div class="nav-item col-3"><a href="#" class="nav-link text-center">店家</a></div>
+        <div class="nav-item col-3"><a href="#" class="nav-link text-center">订单</a></div>
+        <div class="nav-item col-3"><a href="#" class="nav-link text-center">我的</a></div>  
+    </div>
 
     <div class="panel panel-default" style="margin-top: 50px;">
       {% if g.user %}
@@ -34,35 +31,35 @@
     </div>
 
     <section class="content">
-    <header>
-      {% block header %}
-        <h1>{% block title %}商品列表{% endblock %}</h1>
-        {% if g.user %}
-          <a class="action" href="{{ url_for('products.create') }}">New</a>
-        {% endif %}
-      {% endblock %}
-    </header>
-    {% for message in get_flashed_messages() %}
+      <header>
+        {% block header %}
+          <h1>{% block title %}商品列表{% endblock %}</h1>
+          {% if g.user %}
+            <a class="action" href="{{ url_for('products.create') }}">New</a>
+          {% endif %}
+        {% endblock %}
+      </header>
+      {% for message in get_flashed_messages() %}
       <div class="flash">{{ message }}</div>
-    {% endfor %}
-        {% block content %}
-        {% for post in posts %}
-          <article class="post">
-            <header>
-              <div>
-                <h1>{{ post['title'] }}</h1>
-                <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d, %H:%M:%S"') }}</div>
-              </div>
-              {% if g.user['id'] == post['author_id'] %}
+      {% endfor %}
+      {% block content %}
+      {% for post in posts %}
+      <div class="card" style="width: 100%;">
+        <h3 class="card-header">{{ post['title'] }}</h3>
+        <img class="card-img-top" src="../static/image/logo.png" alt="Card image cap">
+        <div class="card-body">
+          <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d, %H:%M:%S"') }}</div>
+          <p class="card-text body">{{ post['body'] }}</p>
+          <a href="#" class="btn btn-primary">订购</a>
+          {% if g.user['id'] == post['author_id'] %}
                 <a class="action" href="{{ url_for('products.update', id=post['id']) }}">Edit</a>
-              {% endif %}
-            </header>
-            <p class="body">{{ post['body'] }}</p>
-          </article>
+          {% endif %}
           {% if not loop.last %}
             <hr>
           {% endif %}
-        {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
       {% endblock %}
     </section>
   </div>
