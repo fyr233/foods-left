@@ -17,7 +17,7 @@ def index():
     products = db.execute(
         'SELECT p.product_create, p.productname, p.price, p.type, p.producetime, p.qualitytime, s.seller_phone, s.storename'
         ' FROM product p JOIN seller s ON p.seller_phone = s.seller_phone'
-        ' ORDER BY p.product_create DESC'
+        ' ORDER BY p.producetime DESC'
     ).fetchall()
     return render_template('index.html', products=products)
 
@@ -53,9 +53,9 @@ def create():
 
 def get_products(id, check_author=True):
     product = get_db().execute(
-        'SELECT p.product_create, productname, price, type, producetime, qualitytime, seller_id'
+        'SELECT p.product_create, productname, price, type, producetime, qualitytime, s.seller_phone'
         ' FROM product p JOIN seller s ON p.seller_phone = s.seller_phone'
-        ' WHERE p.seller_phone = ?',
+        ' WHERE p.product_create = ?',
         (id,)
     ).fetchone()
 
@@ -108,11 +108,25 @@ def delete(id):
     db.commit()
     return redirect(url_for('products.index'))
 
+'''订单'''
+@bp.route('/list')
+@login_required
+def list():
+    db = get_db()
+    products = db.execute(
+        'SELECT distinct p.product_create, p.productname, p.price, p.type, p.producetime, p.qualitytime, s.seller_phone, s.storename FROM product p ,seller s , trade t'
+        ' WHERE p.seller_phone = s.seller_phone AND t.product_create = p.product_create'
+        ' AND t.user_phone = ?'
+        'ORDER BY p.producetime DESC',
+        (g.user['user_phone'],)
+    )
+    db.commit()
+    return render_template('products/trade.html', products=products)
 
 '''顾客订购'''
-@bp.route('/trade', methods=('GET', 'POST'))
+@bp.route('/<int:id>/trade', methods=('GET', 'POST'))
 @login_required
-def trade(id, trade_number):
+def trade(id):
     product = get_products(id)
     nowtime = datetime.datetime.now()
 
@@ -120,7 +134,7 @@ def trade(id, trade_number):
     db.execute(
         'INSERT INTO trade (product_create, user_phone, seller_phone, trade_time, cancel, trade_number)'
         ' VALUES (?, ?, ?, ?, ?, ?)',
-        (id, g.user['user_phone'], product['productname'], nowtime, 0, trade_number)
+        (id, g.user['user_phone'], product['seller_phone'], nowtime, 0, 1)
     )
     db.commit()
-    return redirect(url_for('products.index'))
+    return redirect(url_for('products.list'))

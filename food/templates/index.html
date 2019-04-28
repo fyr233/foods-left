@@ -14,14 +14,14 @@
     <link href="../static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
+
 
     <div class="navbar navbar-expand navbar-light bg-light fixed-top row">
-        <div class="nav-item col-4"><a href="#" class="nav-link text-center">商品</a></div>
-        <div class="nav-item col-4"><a href="#" class="nav-link text-center">订单</a></div>
+        <div class="nav-item col-4"><a href="{{ index }}" class="nav-link text-center">商品</a></div>
+        <div class="nav-item col-4"><a href="{{ url_for('products.list') }}" class="nav-link text-center">订单</a></div>
         <div class="nav-item col-4"><a href="#" class="nav-link text-center">我的</a></div>
     </div>
-
+    <div class="container">
     <div class="panel panel-default" style="margin-top: 50px;">
       {% if g.user %}
       <span>{{ g.user['user_phone'] }}  </span>
@@ -51,16 +51,16 @@
           {% for product in products %}
               <div class="card item" style="width: 100%;">
                 <h3 class="card-header">{{ product['productname'] }}</h3>
-                <img class="card-img-top" src="../static/image/logo.png" alt="Card image cap">
+
+                <img class="card-img-top" src="../static/image/logo.png" size="100" alt="Card image cap">
                 <div class="card-body">
-                  <div class="about">by {{ product['storename'] }} on {{ product['producetime']}}</div>
-                  <p class="card-text body">{{ product['product_intro'] }}</p>
-                  <a href="{{ url_for('products.trade', id=product['product_create']) }}" class="btn btn-primary">订购</a>
+                  <h4 class="card-subtitle">{{ product['storename'] }}</h4>
+                  <p class="card-text">商品描述： {{ product['product_intro'] }}</p>
+                  <p class="card-text body">生产日期： {{ product['producetime']}}</p>
+                    <p class="card-text body">保质期： {{ product['qualitytime']}}</p>
+                  <a href="{{ url_for('products.trade', id=product['product_create']) }}" class="btn">订购</a>
                   {% if g.user['user_phone'] == product['seller_phone'] %}
                         <a class="action" href="{{ url_for('products.update', id=product['product_create']) }}">Edit</a>
-                  {% endif %}
-                  {% if not loop.last %}
-                    <hr>
                   {% endif %}
                 </div>
               </div>
