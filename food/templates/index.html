@@ -17,7 +17,7 @@
 
 
     <div class="navbar navbar-expand navbar-light bg-light fixed-top row">
-        <div class="nav-item col-4"><a href="{{ index }}" class="nav-link text-center">商品</a></div>
+        <div class="nav-item col-4"><a href="{{ url_for('products.index') }}" class="nav-link text-center">商品</a></div>
         <div class="nav-item col-4"><a href="{{ url_for('products.list') }}" class="nav-link text-center">订单</a></div>
         <div class="nav-item col-4"><a href="#" class="nav-link text-center">我的</a></div>
     </div>
@@ -69,14 +69,14 @@
         </div>
     </section>
   </div>
-    <script type="text/javascript" src="../static/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.js"></script>
     <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../static/js/owl.carousel.min.js"></script>
     <script type="text/javascript" src="../static/js/H-ui.min.js"></script>
     <script>
         $(document).ready(function(){
           $('.owl-carousel').owlCarousel({
-              loop:true,
+              loop:false,
               margin:10,
               nav:true,
               responsive:{
