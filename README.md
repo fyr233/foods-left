@@ -25,4 +25,7 @@ flask init-db
 
 
 输出`Initialized the database`成功
+
+
+
 最后`flask run`
