@@ -3,6 +3,17 @@
 {% block header %}
   {% block title %}Register{% endblock %}
 {% endblock %}
+
 {% block content %}
+        <a href="store">商家注册？</a>
+        <label for="inputPhonenumber" class="sr-only">手机号</label>
+        <input type="number" name="phonenumber" id="inputPhonenumber" class="form-control" placeholder="Phone number" required autofocus>
+        <label for="inputUsername" class="sr-only">用户名</label>
+        <input type="text" name="username" id="inputUsername" class="form-control" placeholder="User name" required>
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+{% endblock %}
+
+{% block button %}
     注册
 {% endblock %}

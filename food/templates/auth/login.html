@@ -15,11 +15,6 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="../../static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
 
   <body class="text-center">
@@ -29,17 +24,18 @@
       <form class="form-login"  method="post">
       <img class="mb-4" src="../../static/image/pusheen2.gif" alt="" width="170" height="100">
         <h2 class="form-login-heading">食余</h2>
-        <label for="inputUsername" class="sr-only">用户名</label>
-        <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+        {% block content %}
+        <label for="inputPhonenumber" class="sr-only">手机号</label>
+        <input type="number" name="phonenumber" id="inputPhonenumber" class="form-control" placeholder="Phone number" required autofocus>
 
         <label for="inputPassword" class="sr-only">密码</label>
         <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-
+        {% endblock %}
         <div class="checkbox">
           <!--<a href="#">没有账户？注册一个新用户</a>-->
         </div>
         <button class="btn btn-lg btn-primary btn-block" id="check" type="submit">
-            {% block content %}
+            {% block button %}
             登录
             {% endblock %}</button>
       </form>

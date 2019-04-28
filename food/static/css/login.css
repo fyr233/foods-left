@@ -1,7 +1,6 @@
 body {
   padding-top: 40px;
   padding-bottom: 40px;
-  background-color: #eee;
 }
 .logo {
   width: 300px;
@@ -12,10 +11,6 @@ body {
   max-width: 330px;
   padding: 15px;
   margin: 100px auto;
-}
-
-.form-login-heading {
-  border-bottom: 2px dashed gray;
 }
 
 .form-login .form-login-heading,
@@ -52,12 +47,4 @@ body {
 .btn-primary:hover {
   background-color: #ecd6c7;
   border-color: #ecd6c7;
-}
-
-.form-login input,
-.form-login input:hover,
-.form-login input:focus {
-  background-color: transparent;
-  border: transparent;
-  border-bottom: 2px dashed gray;
 }

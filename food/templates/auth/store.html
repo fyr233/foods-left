@@ -1,0 +1,29 @@
+{% extends 'auth/login.html' %}
+
+{% block header %}
+  {% block title %}Store Register{% endblock %}
+{% endblock %}
+
+{% block content %}
+        <label for="inputPhonenumber" class="sr-only">手机号</label>
+        <input type="number" name="phonenumber" id="inputPhonenumber" class="form-control" placeholder="手机号" required autofocus>
+        <label for="inputUsername" class="sr-only">用户名</label>
+        <input type="text" name="username" id="inputUsername" class="form-control" placeholder="用户名" required>
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="密码" required>
+        <label for="inputStore" class="sr-only">商店名称</label>
+        <input type="text" name="storename" id="inputStore" class="form-control" placeholder="商家名称" required>
+        <label for="inputLocation" class="sr-only">地址</label>
+        <input type="text" name="location" id="inputLocation" class="form-control" placeholder="地址" required>
+        <label for="inputIntro" class="sr-only">商店描述</label>
+        <input type="text" name="seller_intro" id="inputIntro" class="form-control" placeholder="商店描述">
+        <label for="inputBegin">开店时间</label>
+        <input type="time" name="begintime" id="inputBegin" class="form-control" placeholder="开店时间" required>
+        <label for="inputEnd">关门时间</label>
+        <input type="time" name="endtime" id="inputEnd" class="form-control" placeholder="关门时间" required>
+
+{% endblock %}
+
+{% block button %}
+    商家注册
+{% endblock %}
