@@ -11,10 +11,10 @@ CREATE TABLE user (
 );
 
 CREATE TABLE product (
-  product_create TIMESTAMP PRIMARY KEY DEFAULT CURRENT_TIMESTAMP,
+  product_create INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT,
   seller_phone INTEGER NOT NULL ,
-  producetime TIMESTAMP NOT NULL,
-  qualitytime TIMESTAMP NOT NULL,
+  producetime DATETIME NOT NULL,
+  qualitytime DATETIME NOT NULL,
   type TEXT NOT NULL,
   productname TEXT NOT NULL,
   price float NOT NULL ,
@@ -27,7 +27,7 @@ CREATE TABLE seller (
   location TEXT NOT NULL ,
   seller_phone INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT ,
   seller_intro TEXT ,
-  LL TEXT NOT NULL ,
+  LL TEXT ,
   begintime TIMESTAMP NOT NULL ,
   endtime TIMESTAMP NOT NULL
 );

@@ -7,6 +7,9 @@
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
     <link href="../static/css/index.css" rel="stylesheet">
     <link href="../static/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../static/css/owl.carousel.min.css" rel="stylesheet" >
+    <link href="../static/css/owl.theme.default.min.css" rel="stylesheet">
+    <link href="../static/css/H-ui.min.css" rel="stylesheet">
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="../static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 </head>
@@ -14,15 +17,14 @@
   <div class="container">
 
     <div class="navbar navbar-expand navbar-light bg-light fixed-top row">
-        <div class="nav-item col-3"><a href="#" class="nav-link text-center">商品</a></div>
-        <div class="nav-item col-3"><a href="#" class="nav-link text-center">店家</a></div>
-        <div class="nav-item col-3"><a href="#" class="nav-link text-center">订单</a></div>
-        <div class="nav-item col-3"><a href="#" class="nav-link text-center">我的</a></div>  
+        <div class="nav-item col-4"><a href="#" class="nav-link text-center">商品</a></div>
+        <div class="nav-item col-4"><a href="#" class="nav-link text-center">订单</a></div>
+        <div class="nav-item col-4"><a href="#" class="nav-link text-center">我的</a></div>
     </div>
 
     <div class="panel panel-default" style="margin-top: 50px;">
       {% if g.user %}
-      <span>{{ g.user['username'] }}  </span>
+      <span>{{ g.user['user_phone'] }}  </span>
       <a href="{{ url_for('auth.logout') }}">Log Out</a>
        {% else %}
       <a href="{{ url_for('auth.register') }}">Register</a>
@@ -35,36 +37,55 @@
         {% block header %}
           <h1>{% block title %}商品列表{% endblock %}</h1>
           {% if g.user %}
-            <a class="action" href="{{ url_for('products.create') }}">New</a>
+            <a class="action" href="{{ url_for('products.create') }}">添加商品</a>
           {% endif %}
         {% endblock %}
       </header>
       {% for message in get_flashed_messages() %}
       <div class="flash">{{ message }}</div>
       {% endfor %}
-      {% block content %}
-      {% for post in posts %}
-      <div class="card" style="width: 100%;">
-        <h3 class="card-header">{{ product['productname'] }}</h3>
-        <img class="card-img-top" src="../static/image/logo.png" alt="Card image cap">
-        <div class="card-body">
-          <div class="about">by {{ product['storename'] }} on {{ product['product_create'].strftime('%Y-%m-%d, %H:%M:%S"') }}</div>
-          <p class="card-text body">{{ product['product_intro'] }}</p>
-          <a href="{{ url_for('products.order', id=product['product_create']) }}" class="btn btn-primary">订购</a>
-          {% if g.user['user_phone'] == product['seller_phone'] %}
-                <a class="action" href="{{ url_for('products.update', id=product['product_create'], trade_number=1) }}">Edit</a>
-          {% endif %}
-          {% if not loop.last %}
-            <hr>
-          {% endif %}
+
+        <div class="owl-carousel">
+          {% block content %}
+
+          {% for product in products %}
+              <div class="card item" style="width: 100%;">
+                <h3 class="card-header">{{ product['productname'] }}</h3>
+                <img class="card-img-top" src="../static/image/logo.png" alt="Card image cap">
+                <div class="card-body">
+                  <div class="about">by {{ product['storename'] }} on {{ product['producetime']}}</div>
+                  <p class="card-text body">{{ product['product_intro'] }}</p>
+                  <a href="{{ url_for('products.trade', id=product['product_create']) }}" class="btn btn-primary">订购</a>
+                  {% if g.user['user_phone'] == product['seller_phone'] %}
+                        <a class="action" href="{{ url_for('products.update', id=product['product_create']) }}">Edit</a>
+                  {% endif %}
+                  {% if not loop.last %}
+                    <hr>
+                  {% endif %}
+                </div>
+              </div>
+          {% endfor %}
+          {% endblock %}
         </div>
-      </div>
-      {% endfor %}
-      {% endblock %}
     </section>
   </div>
     <script type="text/javascript" src="../static/js/jquery-3.3.1.slim.min.js"></script>
     <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
-
+    <script type="text/javascript" src="../static/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="../static/js/H-ui.min.js"></script>
+    <script>
+        $(document).ready(function(){
+          $('.owl-carousel').owlCarousel({
+              loop:true,
+              margin:10,
+              nav:true,
+              responsive:{
+                  0:{
+                      items:1
+                  }
+              }
+          })
+        });
+    </script>
 </body>
 </html>

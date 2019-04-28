@@ -5,6 +5,7 @@ from werkzeug.exceptions import abort
 
 from food.auth import login_required
 from food.db import get_db
+import random
 
 import datetime
 bp = Blueprint('products', __name__)
@@ -14,11 +15,10 @@ bp = Blueprint('products', __name__)
 def index():
     db = get_db()
     products = db.execute(
-        'SELECT p.product_create, productname, price, type, producetime, qualitytime, s.seller_phone, s.storename'
+        'SELECT p.product_create, p.productname, p.price, p.type, p.producetime, p.qualitytime, s.seller_phone, s.storename'
         ' FROM product p JOIN seller s ON p.seller_phone = s.seller_phone'
-        ' ORDER BY product_create DESC'
+        ' ORDER BY p.product_create DESC'
     ).fetchall()
-
     return render_template('index.html', products=products)
 
 '''商家新建商品'''
@@ -32,6 +32,7 @@ def create():
         productname = request.form['productname']
         price = request.form['price']
         error = None
+        product_create = random.randint(1, 10000000);
 
         if not productname:
             error = 'Product name is required.'
@@ -41,9 +42,9 @@ def create():
         else:
             db = get_db()
             db.execute(
-                'INSERT INTO product (seller_phone, producetime, qualitytime, type, productname, price)'
-                ' VALUES (?, ?, ?, ?, ?, ?)',
-                (g.user['user_phone'], producetime, qualitytime, type, productname, price)
+                'INSERT INTO product (product_create, seller_phone, producetime, qualitytime, type, productname, price)'
+                ' VALUES (?, ?, ?, ?, ?, ?, ?)',
+                (product_create, g.user['user_phone'], producetime, qualitytime, type, productname, price)
             )
             db.commit()
             return redirect(url_for('products.index'))
@@ -109,7 +110,7 @@ def delete(id):
 
 
 '''顾客订购'''
-@bp.route('/order', methods=('GET', 'POST'))
+@bp.route('/trade', methods=('GET', 'POST'))
 @login_required
 def trade(id, trade_number):
     product = get_products(id)

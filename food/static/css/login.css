@@ -41,10 +41,10 @@ body {
 }
 
 label {
-margin:10px 0 0 3px;
-font-weight: bold;
-display: block;
-float: left;
+  margin:10px 0 0 3px;
+  font-weight: bold;
+  display: block;
+  float: left;
 }
 
 .btn-primary {
