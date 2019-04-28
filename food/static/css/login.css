@@ -40,6 +40,13 @@ body {
   border-bottom-left-radius: 0;
 }
 
+label {
+margin:10px 0 0 3px;
+font-weight: bold;
+display: block;
+float: left;
+}
+
 .btn-primary {
   background-color: #e79686;
   border-color: #e79686;
