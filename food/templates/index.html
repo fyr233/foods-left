@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no,uc-fitscreen=yes">
     <title>food</title>
      <!-- Bootstrap core CSS -->
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
@@ -15,13 +16,13 @@
 </head>
 <body>
 
-
+    <div class="container">
     <div class="navbar navbar-expand navbar-light bg-light fixed-top row">
         <div class="nav-item col-4"><a href="{{ url_for('products.index') }}" class="nav-link text-center">商品</a></div>
         <div class="nav-item col-4"><a href="{{ url_for('products.list') }}" class="nav-link text-center">订单</a></div>
         <div class="nav-item col-4"><a href="#" class="nav-link text-center">我的</a></div>
     </div>
-    <div class="container">
+
     <div class="panel panel-default" style="margin-top: 50px;">
       {% if g.user %}
       <span>{{ g.user['user_phone'] }}  </span>
@@ -45,9 +46,8 @@
       <div class="flash">{{ message }}</div>
       {% endfor %}
 
+        {% block content %}
         <div class="owl-carousel">
-          {% block content %}
-
           {% for product in products %}
               <div class="card item" style="width: 100%;">
                 <h3 class="card-header">{{ product['productname'] }}</h3>
@@ -65,11 +65,11 @@
                 </div>
               </div>
           {% endfor %}
-          {% endblock %}
         </div>
+        {% endblock %}
     </section>
   </div>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="../static/js/jquery-2.1.4.js"></script>
     <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../static/js/owl.carousel.min.js"></script>
     <script type="text/javascript" src="../static/js/H-ui.min.js"></script>

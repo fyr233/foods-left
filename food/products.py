@@ -114,7 +114,7 @@ def delete(id):
 def list():
     db = get_db()
     products = db.execute(
-        'SELECT distinct p.product_create, p.productname, p.price, p.type, p.producetime, p.qualitytime, s.seller_phone, s.storename FROM product p ,seller s , trade t'
+        'SELECT p.product_create, p.productname, p.price, p.type, p.producetime, p.qualitytime, s.seller_phone, s.storename FROM product p ,seller s , trade t'
         ' WHERE p.seller_phone = s.seller_phone AND t.product_create = p.product_create'
         ' AND t.user_phone = ?'
         'ORDER BY p.producetime DESC',
