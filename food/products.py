@@ -6,6 +6,8 @@ from werkzeug.exceptions import abort
 from food.auth import login_required
 from food.db import get_db
 import random
+import pyqrcode
+import os
 
 import datetime
 bp = Blueprint('products', __name__)
@@ -129,6 +131,9 @@ def list():
 def trade(id):
     product = get_products(id)
     nowtime = datetime.datetime.now()
+    #print(os.getcwd())
+    qr = pyqrcode.create(str(id))
+    qr.svg("food/static/image/qrcodes/"+str(id)+"-qrcode.svg", scale=8)#没写完#现在写完了
 
     db = get_db()
     db.execute(

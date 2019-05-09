@@ -9,3 +9,47 @@
 .navbar {
 	padding: 0;
 }
+
+#qrbutton {
+	color: #06c;
+    line-height: 21px;
+	display: inline-block;
+    box-sizing: border-box;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 400;
+    white-space: nowrap;
+    vertical-align: middle;
+    -moz-padding-start: npx;
+    -moz-padding-end: npx;
+    border: solid 1px #ddd;
+    background-color: #fff;
+	width: auto;
+	padding: 4px 12px;
+	font-size: 14px;
+}
+
+#qrcode img {
+	/*position: absolute;
+	top: 50%;
+	left: 50%;*/
+	width: 600px;
+	height: 600px;
+	display: block;
+	margin: 0 auto;
+	border: solid 2px rgb(100, 100, 100);
+	border-radius: 20px;
+	background: rgba(255, 255, 255, 0.822);
+	box-shadow: 10px 10px 5px #888888;
+}
+
+#qrcode {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(255, 255, 255, 0.6);
+	z-index: 9999;
+	display: none;
+}
