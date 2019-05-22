@@ -1,20 +1,36 @@
 {% extends 'index.html' %}
 
 {% block header %}
-  <h1>{% block title %}Edit "{{ post['title'] }}"{% endblock %}</h1>
+  <h1>{% block title %}修改 "{{ product['productname'] }}"{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-  <form method="post">
-    <label for="title">Title</label>
-    <input name="title" id="title"
-      value="{{ request.form['title'] or post['title'] }}" required>
-    <label for="body">Body</label>
-    <textarea name="body" id="body">{{ request.form['body'] or post['body'] }}</textarea>
-    <input type="submit" value="Save">
+    <form method="post">
+        <label for="productName">商品名</label>
+        <input name="productname" id="productName" class="input-text" value="{{ request.form['productname'] }}" required>
+        <label for="intro">商品描述</label>
+        <textarea name="product_intro" id="intro" class="textarea">{{ request.form['body'] }}</textarea>
+        <label for="type">商品类型</label>
+        <span class="select-box">
+          <select class="select" id="type" size="1" name="type">
+            <option value="糕点" selected>糕点</option>
+            <option value="奶茶">奶茶</option>
+            <option value="水果">水果</option>
+            <option value="其他">其他</option>
+          </select>
+        </span>
+        <label for="begintime">生产日期</label>
+        <input name="producetime" id="begintime" type="datetime-local" class="input-text" required>
+        <label for="endtime">保质期</label>
+        <input name="qualitytime" id="endtime" type="datetime-local" class="input-text" required>
+        <label for="price">价格</label>
+        <input name="price" type="number" step=0.01 id="price" class="input-text" required>
+
+      <input type="submit" class="btn" value="Save">
   </form>
-  <hr>
-  <form action="{{ url_for('products.delete', id=product ['id']) }}" method="post">
-    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+    <form action="{{ url_for('products.delete', id=product ['product_create']) }}" method="post">
+    <input class="btn btn-danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
   </form>
+
+
 {% endblock %}

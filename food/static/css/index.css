@@ -1,13 +1,68 @@
 .nav-item {
-	border-left: 1px #6495ED solid;
-	border-right: 1px #6495ED solid;
-	background-color: #F5F5F5;
+	border-left: 1px #212529 dashed;
+	background-color: #FDF5E6;
 	font-size: 20px;
 }
 
 
 .navbar {
 	padding: 0;
+}
+
+
+.nav-item:hover {
+	background-color: #fcb955;
+	font-size: 25px;
+	color: white;
+}
+
+.nav-item.active {
+	background-color: #fcb955;
+}
+
+.nav-item a:hover, .nav-item.active a {
+    color: white;
+}
+
+.navbar {
+	padding: 0;
+}
+
+.panel-default {
+	border: transparent;
+	border-bottom: 1px black dashed;
+}
+
+.user {
+	color:#fcb955;
+	font-size:15px;
+	padding: 0 10px;
+}
+
+
+/*商品*/
+.card-header {
+	margin: 10px;
+    border-bottom: transparent;
+	background-color: transparent;
+    color: #fcb955;
+}
+.card {
+	border-radius: 2rem;
+	border: transparent;
+	background-color: #FDF5E6;
+	box-shadow: 10px 5px 5px grey;
+    margin-bottom: 20px;
+}
+
+.card-img-top {
+    padding: 0 20px;
+}
+.owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span {
+    background: #fcb955;
+}
+.owl-theme .owl-controls .owl-nav [class*=owl-]:hover {
+	background: #fcb955;
 }
 
 #qrbutton {
@@ -20,8 +75,8 @@
     font-weight: 400;
     white-space: nowrap;
     vertical-align: middle;
-    -moz-padding-start: npx;
-    -moz-padding-end: npx;
+    /*-moz-padding-start: npx;
+    -moz-padding-end: npx;*/
     border: solid 1px #ddd;
     background-color: #fff;
 	width: auto;

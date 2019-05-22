@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+{% block header %}
+  <h1>{% block title %}中国科学技术大学(西校区)-东门{% endblock %}</h1>
+{% endblock %}
+
+{% block active %}
+        <div class="nav-item col-4" style="border-left: transparent;"><a href="{{ url_for('products.index') }}" class="nav-link text-center">商品</a></div>
+        <div class="nav-item col-4"><a href="{{ url_for('products.list') }}" class="nav-link text-center">订单</a></div>
+        <div class="nav-item col-4 active"><a href="{{ url_for('products.map')  }}" class="nav-link text-center">我的</a></div>
+        {% endblock %}
+{% block content %}
+    <img class="card-img-top hidden-xs hidden-sm" src="../static/image/map.png" alt="Card image cap">
+    <img class="card-img-top visible-xs visible-sm" src="../static/image/map1.png" alt="Card image cap">
+    <img class="card-img-top visible-xs visible-sm" src="../static/image/map2.png" alt="Card image cap">
+{% endblock %}

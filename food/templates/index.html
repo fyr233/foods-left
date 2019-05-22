@@ -6,26 +6,28 @@
     <title>food</title>
      <!-- Bootstrap core CSS -->
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/css/index.css" rel="stylesheet">
     <link href="../static/css/font-awesome.min.css" rel="stylesheet">
     <link href="../static/css/owl.carousel.min.css" rel="stylesheet" >
     <link href="../static/css/owl.theme.default.min.css" rel="stylesheet">
     <link href="../static/css/H-ui.min.css" rel="stylesheet">
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="../static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="../static/css/index.css" rel="stylesheet">
 </head>
 <body>
 
     <div class="container">
     <div class="navbar navbar-expand navbar-light bg-light fixed-top row">
-        <div class="nav-item col-4"><a href="{{ url_for('products.index') }}" class="nav-link text-center">商品</a></div>
+        {% block active %}
+        <div class="nav-item col-4 active" style="border-left: transparent;"><a href="{{ url_for('products.index') }}" class="nav-link text-center">商品</a></div>
         <div class="nav-item col-4"><a href="{{ url_for('products.list') }}" class="nav-link text-center">订单</a></div>
-        <div class="nav-item col-4"><a href="#" class="nav-link text-center">我的</a></div>
+        <div class="nav-item col-4"><a href="{{ url_for('products.map')  }}" class="nav-link text-center">我的</a></div>
+        {% endblock %}
     </div>
 
     <div class="panel panel-default" style="margin-top: 50px;">
       {% if g.user %}
-      <span>{{ g.user['user_phone'] }}  </span>
+      <span class="user">{{ g.user['user_phone'] }}  </span>
       <a href="{{ url_for('auth.logout') }}">Log Out</a>
        {% else %}
       <a href="{{ url_for('auth.register') }}">Register</a>
@@ -38,7 +40,7 @@
         {% block header %}
           <h1>{% block title %}商品列表{% endblock %}</h1>
           {% if g.user %}
-            <a class="action" href="{{ url_for('products.create') }}">添加商品</a>
+            <a class="action btn" href="{{ url_for('products.create') }}">添加商品</a>
           {% endif %}
         {% endblock %}
       </header>
@@ -53,21 +55,33 @@
                 <div id="qrcode" style="display: none;">
                   <img id="qrimage" width="100%" height="100%" src="../static/image/qrcodes/{{product['product_create']}}-qrcode.svg">
                 </div>
-                <h3 class="card-header">{{ product['productname'] }}</h3>
+                <h2 class="card-header">{{ product['productname'] }}</h2>
 
-                <img class="card-img-top" src="../static/image/logo.png" size="100" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-subtitle">{{ product['storename'] }}</h4>
-                  <p class="card-text">商品描述： {{ product['product_intro'] }}</p>
-                  <p class="card-text body">生产日期： {{ product['producetime']}}</p>
-                    <p class="card-text body">保质期： {{ product['qualitytime']}}</p>
-                  <a href="{{ url_for('products.trade', id=product['product_create']) }}" class="btn">订购</a>
-                  {% if g.user['user_phone'] == product['seller_phone'] %}
-                        <a class="action" href="{{ url_for('products.update', id=product['product_create']) }}">Edit</a>
+
+                  {% if product['type'] == '糕点'%}
+                  <img class="card-img-top" src="../static/image/bread.png" alt="Card image cap">
+                   {% elif product['type'] == '奶茶'%}
+                    <img class="card-img-top" src="../static/image/milktea.png" alt="Card image cap">
+                  {% elif product['type'] == '水果'%}
+                      <img class="card-img-top" src="../static/image/fruit.png" alt="Card image cap">
+                  {% else%}
+                      <img class="card-img-top" src="../static/image/other.png" alt="Card image cap">
                   {% endif %}
 
-                  <a id="qrbutton" class="btn">查看二维码</a>
-                  
+
+                  <div class="card-body">
+                  <p class="card-text body">卖家：{{ product['storename'] }}</p>
+                    {% if product['product_intro'] != null %}
+                  <p class="card-text">商品描述： {{ product['product_intro'] }}</p>
+                    {% endif %}
+                  <p class="card-text body" style="margin-bottom: 0">生产日期： {{ product['producetime']}}</p>
+                    <p class="card-text body">保质期： {{ product['qualitytime']}}</p>
+                    <p class="card-text body">价格：{{ product['price'] }} 元</p>
+                  <a href="{{ url_for('products.trade', id=product['product_create']) }}" class="btn">订购</a>
+                  {% if g.user['user_phone'] == product['seller_phone'] %}
+                        <a class="action btn" href="{{ url_for('products.update', id=product['product_create']) }}">修改商品信息</a>
+                  {% endif %}
+
                 </div>
               </div>
           {% endfor %}

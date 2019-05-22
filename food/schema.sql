@@ -33,7 +33,7 @@ CREATE TABLE seller (
 );
 
 CREATE TABLE trade (
-    product_create TIMESTAMP NOT NULL ,
+    product_create INTEGER NOT NULL ,
     user_phone INTEGER NOT NULL ,
     seller_phone INTEGER NOT NULL ,
     trade_time TIMESTAMP PRIMARY KEY,

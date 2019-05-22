@@ -1,5 +1,61 @@
 {% extends 'index.html' %}
 
+{% block active %}
+        <div class="nav-item col-4" style="border-left: transparent;"><a href="{{ url_for('products.index') }}" class="nav-link text-center">商品</a></div>
+        <div class="nav-item col-4 active"><a href="{{ url_for('products.list') }}" class="nav-link text-center">订单</a></div>
+        <div class="nav-item col-4"><a href="{{ url_for('products.map')  }}" class="nav-link text-center">我的</a></div>
+{% endblock %}
+
 {% block header %}
   <h1>{% block title %}我的订单{% endblock %}</h1>
 {% endblock %}
+
+{% block content %}
+        <div class="owl-carousel">
+          {% for product in products %}
+              <div class="card item" style="width: 100%;">
+                <div id="qrcode" style="display: none;">
+                  <img id="qrimage" width="100%" height="100%" src="../static/image/qrcodes/{{product['product_create']}}-qrcode.svg">
+                </div>
+                  <h2 class="card-header">{{ product['productname'] }}
+                      <span class="text-muted" style="font-size: 18px;">
+                          {% if product['cancel'] == 0 %} 已下单，商家备货中
+                          {% elif product['cancel'] == 1 %} 待领取
+                          {% else %} 交易成功
+                          {% endif %}
+                      </span>
+                      <p class="text-muted" style="font-size: 18px;margin:10px 0;">
+                          交易时间：{{ product['trade_time'].strftime('%Y-%m-%d %H:%M')}}
+                      </p>
+                        {% if g.user['user_phone'] == product['seller_phone'] and product['cancel'] == 0 %}
+                        <a href="{{ url_for('products.send', id=product['product_create']) }}" class="btn">已发货</a>
+                        {% elif g.user['user_phone'] == product['user_phone'] and product['cancel'] == 1 %}
+                        <a href="{{ url_for('products.receive', id=product['product_create']) }}" class="btn">已收货</a>
+                        {% endif %}
+                  </h2>
+
+
+                 {% if product['type'] == '糕点'%}
+                  <img class="card-img-top" src="../static/image/bread.png" alt="Card image cap">
+                   {% elif product['type'] == '奶茶'%}
+                    <img class="card-img-top" src="../static/image/milktea.png" alt="Card image cap">
+                  {% elif product['type'] == '水果'%}
+                      <img class="card-img-top" src="../static/image/fruit.png" alt="Card image cap">
+                  {% else%}
+                      <img class="card-img-top" src="../static/image/other.png" alt="Card image cap">
+                  {% endif %}
+                <div class="card-body">
+                  <p class="card-text body">卖家：{{ product['storename'] }}</p>
+                    {% if product['product_intro'] != null %}
+                  <p class="card-text">商品描述： {{ product['product_intro'] }}</p>
+                    {% endif %}
+                  <p class="card-text body" style="margin-bottom: 0">生产日期： {{ product['producetime']}}</p>
+                    <p class="card-text body">保质期： {{ product['qualitytime']}}</p>
+                    <p class="card-text body">价格：{{ product['price'] }} 元</p>
+                  <a id="qrbutton" class="btn">查看二维码</a>
+
+                </div>
+              </div>
+          {% endfor %}
+        </div>
+        {% endblock %}

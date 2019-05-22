@@ -23,6 +23,12 @@ def index():
     ).fetchall()
     return render_template('index.html', products=products)
 
+
+'''显示地图'''
+@bp.route('/my')
+def map():
+    return render_template('my.html')
+
 '''商家新建商品'''
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
@@ -34,7 +40,7 @@ def create():
         productname = request.form['productname']
         price = request.form['price']
         error = None
-        product_create = random.randint(1, 10000000);
+        product_create = random.randint(1, 9);
 
         if not productname:
             error = 'Product name is required.'
@@ -116,11 +122,11 @@ def delete(id):
 def list():
     db = get_db()
     products = db.execute(
-        'SELECT p.product_create, p.productname, p.price, p.type, p.producetime, p.qualitytime, s.seller_phone, s.storename FROM product p ,seller s , trade t'
+        'SELECT p.product_create, p.productname, p.price, p.type, p.producetime, p.qualitytime, s.seller_phone, s.storename, t.trade_time , t.cancel , t.user_phone FROM product p ,seller s , trade t'
         ' WHERE p.seller_phone = s.seller_phone AND t.product_create = p.product_create'
-        ' AND t.user_phone = ?'
-        'ORDER BY p.producetime DESC',
-        (g.user['user_phone'],)
+        ' AND (t.user_phone = ? OR t.seller_phone = ?)'
+        'ORDER BY t.trade_time DESC',
+        (g.user['user_phone'], g.user['user_phone'])
     )
     db.commit()
     return render_template('products/trade.html', products=products)
@@ -140,6 +146,32 @@ def trade(id):
         'INSERT INTO trade (product_create, user_phone, seller_phone, trade_time, cancel, trade_number)'
         ' VALUES (?, ?, ?, ?, ?, ?)',
         (id, g.user['user_phone'], product['seller_phone'], nowtime, 0, 1)
+    )
+    db.commit()
+    return redirect(url_for('products.list'))
+
+'''商家发货'''
+@bp.route('/<int:id>/send', methods=('GET', 'POST'))
+@login_required
+def send(id):
+
+    db = get_db()
+    db.execute(
+        ' UPDATE trade SET cancel = 1 WHERE product_create = ?',
+        (id,)
+    )
+    db.commit()
+    return redirect(url_for('products.list'))
+
+
+'''顾客收货'''
+@bp.route('/<int:id>/receive', methods=('GET', 'POST'))
+@login_required
+def receive(id):
+    db = get_db()
+    db.execute(
+        ' UPDATE trade SET cancel = 2 WHERE product_create = ?',
+        (id, )
     )
     db.commit()
     return redirect(url_for('products.list'))
