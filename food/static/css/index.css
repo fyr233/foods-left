@@ -108,3 +108,7 @@
 	z-index: 9999;
 	display: none;
 }
+
+.nav-link {
+    padding: .5rem 0;
+}

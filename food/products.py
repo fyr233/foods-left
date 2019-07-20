@@ -40,7 +40,7 @@ def create():
         productname = request.form['productname']
         price = request.form['price']
         error = None
-        product_create = random.randint(1, 9);
+        product_create = random.randint(1, 3);
 
         if not productname:
             error = 'Product name is required.'
@@ -70,9 +70,8 @@ def get_products(id, check_author=True):
     if product is None:
         abort(404, "Product id {0} doesn't exist.".format(id))
 
-    if check_author and product['seller_phone'] != g.user['user_phone']:
-        abort(403)
 
+    print("???")
     return product
 
 '''商家更新商品信息'''
@@ -104,7 +103,7 @@ def update(id):
             db.commit()
             return redirect(url_for('products.index'))
 
-    return render_template('products/update.html', product=product)
+    return render_template('products/update.html')
 
 '''商家删除商品'''
 @bp.route('/<int:id>/delete', methods=('POST',))
@@ -135,11 +134,13 @@ def list():
 @bp.route('/<int:id>/trade', methods=('GET', 'POST'))
 @login_required
 def trade(id):
+
     product = get_products(id)
     nowtime = datetime.datetime.now()
+
     #print(os.getcwd())
     qr = pyqrcode.create(str(id))
-    qr.svg("food/static/image/qrcodes/"+str(id)+"-qrcode.svg", scale=8)#没写完#现在写完了
+    qr.svg("static/image/qrcodes/"+str(id)+"-qrcode.svg", scale=8)#没写完#现在写完了
 
     db = get_db()
     db.execute(
@@ -175,3 +176,13 @@ def receive(id):
     )
     db.commit()
     return redirect(url_for('products.list'))
+
+'''删除订单'''
+@bp.route('/<int:id>/orderdelete', methods=('POST',))
+@login_required
+def orderdelete(id):
+    get_products(id)
+    db = get_db()
+    db.execute('DELETE FROM trade WHERE product_create = ?', (id,))
+    db.commit()
+    return redirect(url_for('products.index'))

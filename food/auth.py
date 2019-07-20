@@ -19,7 +19,9 @@ def register():
         db = get_db()
         error = None
 
-        if not user_phone:
+        if user_phone == '123':
+            error = 'Root is not availble.'
+        elif not user_phone:
             error = 'User phone is required.'
         elif not username:
             error = 'Username is required.'

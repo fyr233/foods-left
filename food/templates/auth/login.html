@@ -23,7 +23,7 @@
 
       <form class="form-login"  method="post">
       <img class="mb-4" src="../../static/image/pusheen2.gif" alt="" width="170" height="100">
-        <h2 class="form-login-heading">食余</h2>
+        <h2 class="form-login-heading">食余 Foodfish</h2>
         {% block content %}
         <label for="inputPhonenumber" class="sr-only">手机号</label>
         <input type="number" name="user_phone" id="inputPhonenumber" class="form-control" placeholder="Phone number" required autofocus>
@@ -36,7 +36,7 @@
         </div>
         <button class="btn btn-lg btn-primary btn-block" id="check" type="submit">
             {% block button %}
-            登录
+            Login
             {% endblock %}</button>
       </form>
         {% if error %}  {{ error }} {% endif %}

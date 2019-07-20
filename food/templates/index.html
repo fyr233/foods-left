@@ -19,9 +19,9 @@
     <div class="container">
     <div class="navbar navbar-expand navbar-light bg-light fixed-top row">
         {% block active %}
-        <div class="nav-item col-4 active" style="border-left: transparent;"><a href="{{ url_for('products.index') }}" class="nav-link text-center">商品</a></div>
-        <div class="nav-item col-4"><a href="{{ url_for('products.list') }}" class="nav-link text-center">订单</a></div>
-        <div class="nav-item col-4"><a href="{{ url_for('products.map')  }}" class="nav-link text-center">我的</a></div>
+        <div class="nav-item col-4 active" style="border-left: transparent;"><a href="{{ url_for('products.index') }}" class="nav-link text-center">Products</a></div>
+        <div class="nav-item col-4"><a href="{{ url_for('products.list') }}" class="nav-link text-center">Order</a></div>
+        <div class="nav-item col-4"><a href="{{ url_for('products.map')  }}" class="nav-link text-center">Mypage</a></div>
         {% endblock %}
     </div>
 
@@ -33,14 +33,15 @@
       <a href="{{ url_for('auth.register') }}">Register</a>
       <a href="{{ url_for('auth.login') }}">Log In</a>
       {% endif %}
+     <span class="user"> </span>
     </div>
 
     <section class="content">
       <header>
         {% block header %}
-          <h1>{% block title %}商品列表{% endblock %}</h1>
+          <h1>{% block title %}Products list{% endblock %}</h1>
           {% if g.user['is_seller'] == 1 %}
-            <a class="action btn" href="{{ url_for('products.create') }}">添加商品</a>
+            <a class="action btn" href="{{ url_for('products.create') }}">Add leftover</a>
           {% endif %}
         {% endblock %}
       </header>
@@ -70,18 +71,20 @@
 
 
                   <div class="card-body">
-                  <p class="card-text body">卖家：{{ product['storename'] }}</p>
+                  <p class="card-text body">Seller：{{ product['storename'] }}</p>
                     {% if product['product_intro'] != null %}
-                  <p class="card-text">商品描述： {{ product['product_intro'] }}</p>
+                  <p class="card-text">Description： {{ product['product_intro'] }}</p>
                     {% endif %}
-                  <p class="card-text body" style="margin-bottom: 0">生产日期： {{ product['producetime']}}</p>
-                    <p class="card-text body">保质期： {{ product['qualitytime']}}</p>
-                    <p class="card-text body">价格：{{ product['price'] }} 元</p>
-                  <a href="{{ url_for('products.trade', id=product['product_create']) }}" class="btn">订购</a>
+                  <p class="card-text body" style="margin-bottom: 0">Production Date： {{ product['producetime']}}</p>
+                    <p class="card-text body">Expiration Date： {{ product['qualitytime']}}</p>
+                    <p class="card-text body">Price：{{ product['price'] }} yuan</p>
+                  <a href="{{ url_for('products.trade', id=product['product_create']) }}" class="btn">Order</a>
                   {% if g.user['user_phone'] == product['seller_phone'] %}
-                        <a class="action btn" href="{{ url_for('products.update', id=product['product_create']) }}">修改商品信息</a>
+                        <a class="action btn" href="{{ url_for('products.update', id=product['product_create']) }}">Modify information</a>
                   {% endif %}
-
+                  {% if g.user['user_phone'] == 123 %}
+                        <a href="{{ url_for('products.delete', id=product['product_create']) }}" class="btn">Delete</a>
+                  {% endif %}
                 </div>
               </div>
           {% endfor %}

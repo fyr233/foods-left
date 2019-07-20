@@ -1,13 +1,13 @@
 {% extends 'index.html' %}
 
 {% block active %}
-        <div class="nav-item col-4" style="border-left: transparent;"><a href="{{ url_for('products.index') }}" class="nav-link text-center">商品</a></div>
-        <div class="nav-item col-4 active"><a href="{{ url_for('products.list') }}" class="nav-link text-center">订单</a></div>
-        <div class="nav-item col-4"><a href="{{ url_for('products.map')  }}" class="nav-link text-center">我的</a></div>
+        <div class="nav-item col-4" style="border-left: transparent;"><a href="{{ url_for('products.index') }}" class="nav-link text-center">Products</a></div>
+        <div class="nav-item col-4 active"><a href="{{ url_for('products.list') }}" class="nav-link text-center">Orders</a></div>
+        <div class="nav-item col-4"><a href="{{ url_for('products.map')  }}" class="nav-link text-center">Mypage</a></div>
 {% endblock %}
 
 {% block header %}
-  <h1>{% block title %}我的订单{% endblock %}</h1>
+  <h1>{% block title %}My orders{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
@@ -19,18 +19,21 @@
                 </div>
                   <h2 class="card-header">{{ product['productname'] }}
                       <span class="text-muted" style="font-size: 18px;">
-                          {% if product['cancel'] == 0 %} 已下单，商家备货中
-                          {% elif product['cancel'] == 1 %} 待领取
-                          {% else %} 交易成功
+                          {% if product['cancel'] == 0 %} Seller is preparing.
+                          {% elif product['cancel'] == 1 %} Ready to pick.
+                          {% else %} Order is finished.
                           {% endif %}
                       </span>
                       <p class="text-muted" style="font-size: 18px;margin:10px 0;">
-                          交易时间：{{ product['trade_time'].strftime('%Y-%m-%d %H:%M')}}
+                          Ordered Time：{{ product['trade_time'].strftime('%Y-%m-%d %H:%M')}}
                       </p>
                         {% if g.user['user_phone'] == product['seller_phone'] and product['cancel'] == 0 %}
-                        <a href="{{ url_for('products.send', id=product['product_create']) }}" class="btn">已发货</a>
+                        <a href="{{ url_for('products.send', id=product['product_create']) }}" class="btn">Prepared</a>
                         {% elif g.user['user_phone'] == product['user_phone'] and product['cancel'] == 1 %}
-                        <a href="{{ url_for('products.receive', id=product['product_create']) }}" class="btn">已收货</a>
+                        <a href="{{ url_for('products.receive', id=product['product_create']) }}" class="btn">Picked</a>
+                        {% endif %}
+                        {% if g.user['user_phone'] == 123 %}
+                        <a href="{{ url_for('products.orderdelete', id=product['product_create']) }}" class="btn">Delete</a>
                         {% endif %}
                   </h2>
 
@@ -45,15 +48,16 @@
                       <img class="card-img-top" src="../static/image/other.png" alt="Card image cap">
                   {% endif %}
                 <div class="card-body">
-                  <p class="card-text body">卖家：{{ product['storename'] }}</p>
+                  <p class="card-text body">Seller：{{ product['storename'] }}</p>
                     {% if product['product_intro'] != null %}
-                  <p class="card-text">商品描述： {{ product['product_intro'] }}</p>
+                  <p class="card-text">Description： {{ product['product_intro'] }}</p>
                     {% endif %}
-                  <p class="card-text body" style="margin-bottom: 0">生产日期： {{ product['producetime']}}</p>
-                    <p class="card-text body">保质期： {{ product['qualitytime']}}</p>
-                    <p class="card-text body">价格：{{ product['price'] }} 元</p>
-                  <a id="qrbutton" class="btn">查看二维码</a>
-
+                  <p class="card-text body" style="margin-bottom: 0">Production Date： {{ product['producetime']}}</p>
+                    <p class="card-text body">Expiration Date： {{ product['qualitytime']}}</p>
+                    <p class="card-text body">Price：{{ product['price'] }} yuan</p>
+                  {% if product['cancel'] == 1 %}
+                    <a id="qrbutton" class="btn">QRcode</a>
+                    {% endif %}
                 </div>
               </div>
           {% endfor %}
